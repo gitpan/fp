@@ -1,4 +1,4 @@
-package fp;
+package Fp;
 
 use strict;
 use warnings;
@@ -18,19 +18,19 @@ our $VERSION = '0.01';
 sub import {
     no strict 'refs';
     # we have to use the build in map
-    # here instead of fp::apply, in
+    # here instead of Fp::apply, in
     # order to get an accurate value
-    # from caller. If we use fp::apply, 
+    # from caller. If we use Fp::apply, 
     # it's recursion will cause issues
     # with that.
     map {
-        *{(caller())[0] . "::$_"} = \&{"fp::$_"}
+        *{(caller())[0] . "::$_"} = \&{"Fp::$_"}
         } (filter(sub {
-                    defined &{"fp::$_[0]"} 
+                    defined &{"Fp::$_[0]"} 
                   }, (is_not_equal_to(len(tail(@_)), 0) ?
                             tail(@_)
                             :
-                            list(keys %{"fp::"})))) }
+                            list(keys %{"Fp::"})))) }
 
 ## functional constants
 ## --------------------------------------------------
@@ -268,11 +268,11 @@ __END__
 
 =head1 NAME
 
-fp - a library for programming in a functional style
+Fp - a library for programming in a functional style
 
 =head1 SYNOPSIS
 
-  use fp;
+  use Fp;
   
   # filter out all be the even numbers
   filter(function { is_even(head(@_)) }, range(1, 100));
@@ -542,8 +542,8 @@ I use B<Devel::Cover> to test the code coverage of my tests, below is the B<Deve
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
  File                           stmt branch   cond    sub    pod   time  total
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
- /fp.pm                        100.0   88.0    n/a  100.0   97.7   35.3   96.6
- t/10_fp_test.t                100.0    n/a    n/a  100.0    n/a   64.7  100.0
+ /Fp.pm                        100.0   88.0    n/a  100.0   97.7   35.3   96.6
+ t/10_Fp_test.t                100.0    n/a    n/a  100.0    n/a   64.7  100.0
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
  Total                         100.0   88.0    n/a  100.0   97.7  100.0   97.3
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
