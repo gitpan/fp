@@ -6,7 +6,7 @@ use warnings;
 use Test::More tests => 41;
 
 BEGIN { 
-    use_ok('Fp');
+    use_ok('fp');
 }
 
 is_deeply [ list(1, 2, 3, 4, 5) ], [ 1 .. 5 ], '... got a list';

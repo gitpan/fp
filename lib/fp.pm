@@ -1,9 +1,9 @@
-package Fp;
+package fp;
 
 use strict;
 use warnings;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 ## import routine
 ## --------------------------------------------------
@@ -17,20 +17,24 @@ our $VERSION = '0.01';
 # this module.
 sub import {
     no strict 'refs';
+    my $package = shift;
     # we have to use the build in map
-    # here instead of Fp::apply, in
+    # here instead of fp::apply, in
     # order to get an accurate value
-    # from caller. If we use Fp::apply, 
+    # from caller. If we use fp::apply, 
     # it's recursion will cause issues
     # with that.
     map {
-        *{(caller())[0] . "::$_"} = \&{"Fp::$_"}
-        } (filter(sub {
-                    defined &{"Fp::$_[0]"} 
-                  }, (is_not_equal_to(len(tail(@_)), 0) ?
-                            tail(@_)
+        *{(caller())[0] . "::$_"} = \&{"${package}::$_"}
+        } (fp::filter(sub {
+                    defined &{"${package}::$_[0]"}
+                  }, (fp::is_not_equal_to(fp::len(fp::tail(@_)), 0) ?
+                            fp::tail(@_)
                             :
-                            list(keys %{"Fp::"})))) }
+                            fp::filter(
+                                sub { fp::is_not_equal_to("import", fp::head(@_)) }, 
+                                fp::list(keys %{"${package}::"})
+                                )))) }
 
 ## functional constants
 ## --------------------------------------------------
@@ -268,11 +272,11 @@ __END__
 
 =head1 NAME
 
-Fp - a library for programming in a functional style
+fp - a library for programming in a functional style
 
 =head1 SYNOPSIS
 
-  use Fp;
+  use fp;
   
   # filter out all be the even numbers
   filter(function { is_even(head(@_)) }, range(1, 100));
@@ -542,10 +546,12 @@ I use B<Devel::Cover> to test the code coverage of my tests, below is the B<Deve
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
  File                           stmt branch   cond    sub    pod   time  total
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
- /Fp.pm                        100.0   88.0    n/a  100.0   97.7   35.3   96.6
- t/10_Fp_test.t                100.0    n/a    n/a  100.0    n/a   64.7  100.0
+ /fp.pm                        100.0   88.0    n/a  100.0   97.7   76.0   96.6
+ /fp/functionals.pm            100.0  100.0    n/a  100.0  100.0    0.3  100.0
+ t/10_fp_test.t                100.0    n/a    n/a  100.0    n/a   20.4  100.0
+ t/20_fp_functionals_test.t     97.3    n/a    n/a  100.0    n/a    3.3   97.8
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
- Total                         100.0   88.0    n/a  100.0   97.7  100.0   97.3
+ Total                          99.5   89.3    n/a  100.0   98.1  100.0   97.9
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
 
 =head1 SEE ALSO

@@ -1,7 +1,7 @@
 use ExtUtils::MakeMaker;
 WriteMakefile(
-    NAME         => 'Fp',
-    VERSION_FROM => 'lib/Fp.pm', 
+    NAME         => 'fp',
+    VERSION_FROM => 'lib/fp.pm', 
     PREREQ_PM    => {
         'Test::More' => 0.47,
     }
