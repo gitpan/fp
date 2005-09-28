@@ -1,5 +1,9 @@
 Revision history for Perl extension fp.
 
+0.03 Wed Sept 28 2005
+    - added implementation of lambda calculus using
+      perl subs as the lambda abstraction
+
 0.02 Fri July 9 2004
     - I added fp::functionals to this module. This
       too has been kicking around for a little while

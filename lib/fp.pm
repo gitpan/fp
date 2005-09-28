@@ -3,7 +3,7 @@ package fp;
 use strict;
 use warnings;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 ## import routine
 ## --------------------------------------------------
@@ -39,7 +39,7 @@ sub import {
 ## functional constants
 ## --------------------------------------------------
 # boolean constants
-sub true () { 1 }
+sub true  () { 1 }
 sub false () { 0 }
 	
 # empty list constant
@@ -52,20 +52,20 @@ sub list (@);
 sub list (@) { @_ }
 
 # emptiness predicates
-sub is_empty (@) { @_ ? 0 : 1 }
+sub is_empty     (@) { @_ ? 0 : 1 }
 sub is_not_empty (@) { @_ ? 1 : 0 }
 
 # selection
-sub head (@) { $_[0] }
-sub tail (@) { @_[ 1 .. $#_ ] }
+sub head  (@) { $_[0] }
+sub tail  (@) { @_[ 1 .. $#_ ] }
 
 # selection macros
-sub first (@) { is_not_empty(@_) ? head @_ : nil }
-sub second (@) { first tail @_ }
-sub third (@) { second tail @_ }
-sub fourth (@) { third tail @_ }
-sub fifth (@) { fourth tail @_ }
-sub sixth (@) { fifth tail @_ }
+sub first  (@) { is_not_empty(@_) ? head @_ : nil }
+sub second (@) { first  tail @_ }
+sub third  (@) { second tail @_ }
+sub fourth (@) { third  tail @_ }
+sub fifth  (@) { fourth tail @_ }
+sub sixth  (@) { fifth  tail @_ }
 
 sub reduce (@) { tail @_ }
 
@@ -291,9 +291,9 @@ fp - a library for programming in a functional style
 
 =head1 DESCRIPTION
 
-None of the code above is all that interesting until you consider that at no point, was variable assignment (C<=>), C<if> statements, or non-recursive iteration used. 
-
 This module is an experiment in functional programming in perl. It uses nothing but a combination of; subroutines, the C<@_> array and a few built in operators to implement a style of functional programming.
+
+None of the code above is all that interesting until you consider that at no point was variable assignment (C<=>), C<if> statements, or non-recursive iteration used. Although, do be entirely honest, there is actually two times when the C<=> operator is used in the entire module. The first time is to assign the module's version, the second time is within the import routine, but those are really not parts of this library and really more infastructure anyway. 
 
 Variable assignment is not utilized, instead the contents of the C<@_> argument array are accessed/manipulated and passed along as the return of values from functions. Recursion is the only means of iteration, we do not use any of perl's built in iteration mechanisms (C<for>, C<foreach>, C<while>, etc.). All functions are non-destructive to their inputs, and just about everything returns an array of some sort, so function call chaining works quite well. It operates only on flat lists only, since perl will flatten any arrays given as arguments. 
 
@@ -509,6 +509,10 @@ This along with its mutually recursive mate C<is_even> will determine if a given
 
 This attempts to determine if two elements are equal. 
 
+=item B<is_not_equal_to ($element, $element)>
+
+This attempts to determine if two elements are not equal. 
+
 =item B<is_digit ($element)>
 
 This attempts to discern if a given element is a digit.
@@ -544,14 +548,14 @@ None that I am currently aware of. Of course, that does not mean that they do no
 I use B<Devel::Cover> to test the code coverage of my tests, below is the B<Devel::Cover> report on this module test suite.
 
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
- File                           stmt branch   cond    sub    pod   time  total
+ File                           stmt   bran   cond    sub    pod   time  total
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
- /fp.pm                        100.0   88.0    n/a  100.0   97.7   76.0   96.6
- /fp/functionals.pm            100.0  100.0    n/a  100.0  100.0    0.3  100.0
- t/10_fp_test.t                100.0    n/a    n/a  100.0    n/a   20.4  100.0
- t/20_fp_functionals_test.t     97.3    n/a    n/a  100.0    n/a    3.3   97.8
+ fp.pm                         100.0   88.0    n/a  100.0  100.0   69.7   97.1
+ fp/functionals.pm             100.0  100.0    n/a  100.0  100.0    0.3  100.0
+ fp/lambda.pm                  100.0    n/a    n/a  100.0    n/a   29.7  100.0
+ fp/lambda/utils.pm            100.0    n/a    n/a  100.0  100.0    0.3  100.0
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
- Total                          99.5   89.3    n/a  100.0   98.1  100.0   97.9
+ Total                         100.0   89.3    n/a  100.0  100.0  100.0   98.7
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
 
 =head1 SEE ALSO
@@ -592,7 +596,7 @@ stevan little, E<lt>stevan@iinteractive.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2004 by Infinity Interactive, Inc.
+Copyright 2004, 2005 by Infinity Interactive, Inc.
 
 L<http://www.iinteractive.com>
 
@@ -600,5 +604,3 @@ This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 
 
 =cut
-
-
